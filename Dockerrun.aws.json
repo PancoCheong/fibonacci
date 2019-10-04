@@ -6,7 +6,7 @@
 	  "image": "panco/fibonacci-frontend",
 	  "hostname": "frontend",
 	  "essential": false,
-	     "memory": 128
+	  "memory": 128
 	},
     {
 	  "name": "api",
