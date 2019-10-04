@@ -21,17 +21,17 @@ after_success:
   - docker push panco/fibonacci-worker
   - docker push panco/fibonacci-nginx
   
-#deploy:
-#  provider: elasticbeanstalk
-#  region: "us-east-2"
-#  app: "docker-react"
-#  env: "DockerReact-env"
-#  bucket_name: "elasticbeanstalk-us-east-2-063193934795"
-#  bucket_path: "docker-react"
-#  on: 
-#    branch: master
-#  access_key_id: 
-#    secure: $AWS_ACCESS_KEY
-#  secret_access_key:
-#   secure: "$AWS_SECRET_KEY"
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "fibonacci"
+  env: "Fibonacci-env"
+  bucket_name: "elasticbeanstalk-us-east-2-063193934795"
+  bucket_path: "fibonacci"
+  on: 
+    branch: master
+  access_key_id: 
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+   secure: "$AWS_SECRET_KEY"
   
