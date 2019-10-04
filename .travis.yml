@@ -1,0 +1,37 @@
+sudo: required
+services:
+  - docker
+  
+before_install:
+  - docker build -t panco/fibonacci -f ./frontend/Dockerfile.dev ./frontend
+
+script:
+  - docker run -e CI=true panco/fibonacci npm run test
+
+after_success:
+  - docker build -t panco/fibonacci-frontend ./frontend
+  - docker build -t panco/fibonacci-api ./api
+  - docker build -t panco/fibonacci-worker ./worker
+  - docker build -t panco/fibonacci-nginx ./nginx
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push them to docker hub  
+  - docker push panco/fibonacci-frontend
+  - docker push panco/fibonacci-api
+  - docker push panco/fibonacci-worker
+  - docker push panco/fibonacci-nginx
+  
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-east-2"
+#  app: "docker-react"
+#  env: "DockerReact-env"
+#  bucket_name: "elasticbeanstalk-us-east-2-063193934795"
+#  bucket_path: "docker-react"
+#  on: 
+#    branch: master
+#  access_key_id: 
+#    secure: $AWS_ACCESS_KEY
+#  secret_access_key:
+#   secure: "$AWS_SECRET_KEY"
+  
